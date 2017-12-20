@@ -1,0 +1,48 @@
+{
+  "name": "biyam",
+  "version": "1.0.0",
+  "description": "Blockly with IPython",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp build"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "Sungkwang Lee",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.35",
+    "@babel/preset-env": "^7.0.0-beta.35",
+    "acorn": "^5.2.1",
+    "arrive": "^2.4.1",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^8.0.0-beta.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-git": "^2.4.2",
+    "gulp-insert": "^0.5.0",
+    "gulp-util": "^3.0.8",
+    "imports-loader": "^0.7.1",
+    "node-blockly": "^1.0.31",
+    "style-loader": "^0.19.1",
+    "text-loader": "0.0.1",
+    "webpack": "^3.10.0",
+    "webpack-stream": "^4.0.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gwangyi/biyam"
+  }
+}
