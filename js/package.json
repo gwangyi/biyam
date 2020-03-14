@@ -15,7 +15,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.35",
     "@babel/preset-env": "^7.0.0-beta.35",
-    "acorn": "^5.2.1",
+    "acorn": "^5.7.4",
     "arrive": "^2.4.1",
     "babel-eslint": "^8.0.3",
     "babel-loader": "^8.0.0-beta.0",
