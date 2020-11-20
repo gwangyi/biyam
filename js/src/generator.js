@@ -11,7 +11,7 @@ function _argBuilder (block, pairSep, argSep, primitiveConverter) {
       let val = JSON.parse(block.getFieldValue('ARG-' + idx))
       return $(arg).attr('name') + pairSep + primitiveConverter(val)
     } else {
-      var code = Blockly.Python.valueToCode(block, 'ARG-' + idx)
+      var code = Blockly.Python.valueToCode(block, 'ARG-' + idx, 99)
       if (code) { return $(arg).attr('name') + pairSep + code } else { return '' }
     }
   }).join(argSep)
