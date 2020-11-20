@@ -8,8 +8,8 @@ class JsBuildCommand(build_py):
         import subprocess
         os.chdir('js')
         try:
-            subprocess.check_call(['npm', 'install'])
-            subprocess.check_call(['npx', 'gulp', 'build'])
+            subprocess.check_call(['yarn', 'install'])
+            subprocess.check_call(['yarn', 'gulp'])
         finally:
             os.chdir('..')
         super().run()
@@ -17,7 +17,7 @@ class JsBuildCommand(build_py):
 
 setup(
         name="biyam",
-        version="2017.12.22a0.dev0",
+        version="2017.12.22a0.dev1",
         packages=["biyam"],
         package_data={'biyam': ['*.xml', 'static/*']},
         url='https://github.com/gwangyi/biyam',

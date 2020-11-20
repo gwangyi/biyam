@@ -22,7 +22,7 @@ module.exports = {
       enforce: 'pre',
       test: /\.js$/,
       loader: 'eslint-loader',
-      exclude: /node_modules|i18n/
+      exclude: /node_modules|i18n|blockly|JS-interpreter/
     }, {
       test: /\.(xml|html)$/,
       loader: 'text-loader',
@@ -39,11 +39,17 @@ module.exports = {
         }
       },
       exclude: /node_modules/,
-    }],
-
-    loaders: [{
+    }, {
       test: require.resolve('arrive'),
-      loader: 'imports-loader?this=>window',
+      use: {
+        loader: 'imports-loader',
+        options: {
+          wrapper: {
+            thisArg: 'window',
+            args: {},
+          },
+        }
+      },
     }],
   },
 
