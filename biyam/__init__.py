@@ -18,7 +18,7 @@ def _js(line: str, cell: str) -> None:
 
 
 def _biyam(line: str, cell: str) -> None:
-    display(Biyam(*re.split(r'\s+', cell)))
+    display(Biyam(*(mod for mod in re.split(r'\s+', cell) if mod)))
 
 
 def load_ipython_extension(ipython: typing.Any) -> None:
