@@ -19,7 +19,7 @@ pip install -e .
 cd js
 yarn
 yarn gulp
-jupyter nbextension install --py biyam
+jupyter nbextension install --py biyam -s
 jupyter nbextension enable --py biyam
 ```
 
