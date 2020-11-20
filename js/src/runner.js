@@ -28,12 +28,12 @@ class Runner {
     interpreter.setProperty(scope, 'alert',
       interpreter.createNativeFunction(function (text) {
         text = text ? text.toString() : ''
-        thisRunner._ui.trigger('output', {output_type: 'stream', name: 'output', text: text + '\n'})
+        thisRunner._ui.trigger('output', { output_type: 'stream', name: 'output', text: text + '\n' })
       }))
 
     // Add an API function for the prompt() block.
-    var wrapper = function (text, callback) {
-      var callback_ = function (ret) {
+    let wrapper = function (text, callback) {
+      const callback_ = function (ret) {
         thisRunner._busy = false
         thisRunner._ui.trigger('finished', false)
         callback(ret)
@@ -57,7 +57,7 @@ class Runner {
     wrapper = function (mod, fn, args, callback) {
       mod = (mod || '').toString()
       fn = (fn || '').toString()
-      let args_ = interpreter.pseudoToNative(args)
+      const args_ = interpreter.pseudoToNative(args)
 
       thisRunner._busy = true
       biyamRpc(mod, fn, args_, output => thisRunner._ui.trigger('output', output)).then(ret => {
@@ -86,11 +86,11 @@ class Runner {
     this.running = false
     if (this.comm) { this.comm.close() }
 
-    let prefix = Blockly.JavaScript.STATEMENT_PREFIX
+    const prefix = Blockly.JavaScript.STATEMENT_PREFIX
 
     try {
       Blockly.JavaScript.STATEMENT_PREFIX = '_highlightBlock(%1);\n'
-      let jscode = this._jscode || Blockly.JavaScript.workspaceToCode(this._workspace)
+      const jscode = this._jscode || Blockly.JavaScript.workspaceToCode(this._workspace)
 
       this._interpreter = new Interpreter(jscode, (interpreter, scope) => this._initApi(interpreter, scope))
       this._ui.trigger('reset')
@@ -102,9 +102,10 @@ class Runner {
   step () {
     if (this._interpreter === null) this.reset()
     this._highlight_pause = false
+    let more
     do {
       try {
-        var more = this._interpreter.step()
+        more = this._interpreter.step()
         this.running = true
       } finally {
         if (!more) {

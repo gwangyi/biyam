@@ -4,14 +4,14 @@ import $ from 'jquery'
 import Blockly from 'node-blockly/browser'
 import './generator'
 
-Blockly.Blocks['biyam_procedure'] = {
+Blockly.Blocks.biyam_procedure = {
   init: function () {
     this.setPreviousStatement(true, null)
     this.setNextStatement(true, null)
   },
   domToMutation: function (dom) {
-    var thisBlock = this
-    var $mutation = $(dom)
+    const thisBlock = this
+    const $mutation = $(dom)
     this.setColour($(dom).attr('hue'))
     Blockly.Events.disable()
     try {
@@ -27,7 +27,7 @@ Blockly.Blocks['biyam_procedure'] = {
         } else {
           field = new Blockly.FieldLabel($(arg).attr('name'))
           if ($(arg).find('item').length > 0) {
-            let options = Array.map($(arg).find('item'), item => [$(item).text(), $(item).attr('value')])
+            const options = Array.map($(arg).find('item'), item => [$(item).text(), $(item).attr('value')])
             thisBlock.appendDummyInput()
               .setAlign(Blockly.ALIGN_RIGHT)
               .appendField(field, 'ARGNAME-' + idx)
@@ -45,7 +45,7 @@ Blockly.Blocks['biyam_procedure'] = {
           thisBlock.getFieldValue('ARGNAME-' + idx, $(arg).attr('name'))
         }
       })
-      var argCnt = $mutation.find('arg').length
+      const argCnt = $mutation.find('arg').length
       if (argCnt === 0) {
         thisBlock.appendDummyInput().appendField($mutation.attr('name'), 'NAME')
       } else {
@@ -61,7 +61,7 @@ Blockly.Blocks['biyam_procedure'] = {
   }
 }
 
-Blockly.Blocks['biyam_procedure_ret'] = {
+Blockly.Blocks.biyam_procedure_ret = {
   init: function () {
     this.setOutput(true, null)
   },
@@ -73,25 +73,25 @@ Blockly.Blocks['biyam_procedure_ret'] = {
 }
 
 function registerBiyamToolboxCategoryCallbacks (biyam) {
-  var i = 0
+  let i = 0
   let cnt = Object.keys(biyam.procedure).length
   if (cnt > 1) cnt--
-  for (let [cat, procedures] of Object.entries(biyam.procedure)) {
-    let i_ = i
+  for (const [cat, procedures] of Object.entries(biyam.procedure)) {
+    const i_ = i
     biyam.workspace.registerToolboxCategoryCallback('BIYAM-' + i, function () {
-      var procedureList = []
-      for (var proc in procedures) {
+      const procedureList = []
+      for (const proc in procedures) {
         procedureList.push(proc)
       }
 
       function genProc (name, proc, ret) {
-        let block = $('<block/>').attr('type', 'biyam_procedure' + (ret ? '_ret' : '')).attr('gap', 16)
-        let mutation = $('<mutation/>').attr('name', name).attr('cat', cat).attr('hue', i_ * 360 / cnt).appendTo(block)
+        const block = $('<block/>').attr('type', 'biyam_procedure' + (ret ? '_ret' : '')).attr('gap', 16)
+        const mutation = $('<mutation/>').attr('name', name).attr('cat', cat).attr('hue', i_ * 360 / cnt).appendTo(block)
         if (ret && proc.ret_type) {
           mutation.attr('ret', JSON.stringify(proc.ret_type))
         }
 
-        let argspec = (proc.args || []).map(arg => typeof (arg) === 'string' ? {name: arg} : arg)
+        const argspec = (proc.args || []).map(arg => typeof (arg) === 'string' ? { name: arg } : arg)
         if (proc.inline === true) {
           mutation.prop('inline', true)
         } else if (proc.inline === false) {
@@ -102,8 +102,8 @@ function registerBiyamToolboxCategoryCallbacks (biyam) {
           mutation.prop('inline', true)
         }
 
-        for (let [idx, arg] of Object.entries(argspec)) {
-          var $arg = $('<arg/>').attr('name', arg.name).appendTo(mutation)
+        for (const [idx, arg] of Object.entries(argspec)) {
+          const $arg = $('<arg/>').attr('name', arg.name).appendTo(mutation)
           if (arg.type === 'Check') {
             $arg.attr('type', 'Check')
           } else if (arg.type === 'Number') {
@@ -121,7 +121,7 @@ function registerBiyamToolboxCategoryCallbacks (biyam) {
               )
             ).appendTo(block)
           } else if (typeof (arg.type) === 'object') {
-            for (var key in arg.type) {
+            for (const key in arg.type) {
               $arg.append($('<item/>').attr('value', JSON.stringify(key)).text(arg.type[key]))
             }
           }
@@ -131,8 +131,8 @@ function registerBiyamToolboxCategoryCallbacks (biyam) {
       }
 
       return $.map($.unique(procedureList), proc => {
-        var proc_ = procedures[proc]
-        var ret = []
+        const proc_ = procedures[proc]
+        const ret = []
         if (proc_.no_func !== true) {
           ret.push(genProc(proc, proc_, true))
         }

@@ -13,8 +13,8 @@ import { registerMimeType } from './view'
 import biyamRpc from './rpc'
 
 function appendBiyamJs (json, md, element) {
-  let r = new Runner(json)
-  let outputArea = this
+  const r = new Runner(json)
+  const outputArea = this
 
   r.on('output', (md, msg) => {
     if (msg === null) {
@@ -30,7 +30,7 @@ function appendBiyamJs (json, md, element) {
     r.step()
   } catch (err) {
     console.error(err)
-    outputArea.append_output({output_type: 'stream', name: 'stderr', text: '' + err})
+    outputArea.append_output({ output_type: 'stream', name: 'stderr', text: '' + err })
   }
 }
 
@@ -39,8 +39,8 @@ function loadIPythonExtension () {
   outputarea.OutputArea.prototype.register_mime_type(MIME_BIYAM_JS, appendBiyamJs, { safe: false, index: 0 })
   registerMimeType()
 
-  for (let cell of Jupyter.notebook.get_cells()) {
-    let rerender = cell.output_area &&
+  for (const cell of Jupyter.notebook.get_cells()) {
+    const rerender = cell.output_area &&
       cell.output_area.outputs.find(output => output.data && output.data[MIME_BIYAM] !== undefined)
     if (rerender) { Jupyter.notebook.render_cell_output(cell) }
   }

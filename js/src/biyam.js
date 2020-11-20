@@ -6,7 +6,7 @@ import outputarea from 'notebook/js/outputarea'
 import Blockly from 'node-blockly/browser'
 
 import Runner from './runner'
-import {registerBiyamToolboxCategoryCallbacks} from './procedures'
+import { registerBiyamToolboxCategoryCallbacks } from './procedures'
 import modalPrompt from './modal'
 import lang from './lang'
 import toolbox from './toolbox.xml'
@@ -71,13 +71,13 @@ class Biyam {
     })
 
     $element.find('button.biyam-code-python').click(() => {
-      var newCell = Jupyter.notebook.insert_cell_below('code', $(Jupyter.notebook.get_cells()).index(thisBiyam._nbCell()))
-      var prefix = $.map(Object.keys(procedures), mod => mod !== '__main__' ? 'import ' + mod : undefined)
+      const newCell = Jupyter.notebook.insert_cell_below('code', $(Jupyter.notebook.get_cells()).index(thisBiyam._nbCell()))
+      const prefix = $.map(Object.keys(procedures), mod => mod !== '__main__' ? 'import ' + mod : undefined)
       newCell.set_text(prefix.join('\n') + '\n\n' + Blockly.Python.workspaceToCode(thisBiyam.workspace))
     })
 
     $element.find('button.biyam-code-js').click(() => {
-      var newCell = Jupyter.notebook.insert_cell_below('code', $(Jupyter.notebook.get_cells()).index(thisBiyam._nbCell()))
+      const newCell = Jupyter.notebook.insert_cell_below('code', $(Jupyter.notebook.get_cells()).index(thisBiyam._nbCell()))
       newCell.set_text('%%javascript_biyam\n\n' + Blockly.JavaScript.workspaceToCode(thisBiyam.workspace))
     })
 
@@ -140,28 +140,28 @@ class Biyam {
   }
 
   _render () {
-    var code = this.code
-    var thisBiyam = this
+    let code = this.code
+    const thisBiyam = this
     if (this.workspace) {
       this.workspace.removeChangeListener(this._handleOnChange)
       code = Blockly.Xml.workspaceToDom(this.workspace)
       this.workspace.dispose()
     }
-    var $toolbox = $(this._parameters.toolbox).clone()
-    var toolbox_ = this._parameters.toolbox
+    const $toolbox = $(this._parameters.toolbox).clone()
+    const toolbox_ = this._parameters.toolbox
     $toolbox.html($toolbox.html().replace(/(^|[^%]){(\w+)}/g,
       (m, p1, p2) => {
         return p1 + Blockly.Msg[p2.toUpperCase()]
       }))
 
-    var cats = Object.keys(this.procedure).length
-    var i = 0
+    let cats = Object.keys(this.procedure).length
+    let i = 0
     if (cats > 0) {
       $toolbox.append($('<sep/>'))
       if (cats > 1) cats--
 
-      for (let cat in this.procedure) {
-        var category = this.procedure[cat]
+      for (const cat in this.procedure) {
+        const category = this.procedure[cat]
         $toolbox.append($('<category/>').attr('name', cat)
           .attr('colour', category.colour || (i * 360 / cats))
           .attr('custom', 'BIYAM-' + i))
@@ -178,7 +178,7 @@ class Biyam {
     this.workspace.addChangeListener(this._handleOnChange.bind(this))
     registerBiyamToolboxCategoryCallbacks(this)
 
-    var outputArea = this.output_area
+    const outputArea = this.output_area
     this._runner.on('output', (e, msg) => {
       if (msg === null) { outputArea.clear_output() } else { outputArea.append_output(msg) }
     })
@@ -210,8 +210,8 @@ class Biyam {
   }
 
   _nbCell () {
-    var elem = $(this.$element).closest('.code_cell')
-    var cell = Jupyter.notebook.get_cells().find(cell => cell.element[0] === elem[0])
+    const elem = $(this.$element).closest('.code_cell')
+    const cell = Jupyter.notebook.get_cells().find(cell => cell.element[0] === elem[0])
     return cell
   }
 
@@ -222,8 +222,8 @@ class Biyam {
       import('i18n/' + lang)
     ]).then(([locale, additional]) => {
       Blockly.setLocale(locale)
-      var MSG = additional()
-      for (let [key, msg] of Object.entries(MSG)) {
+      const MSG = additional()
+      for (const [key, msg] of Object.entries(MSG)) {
         Blockly.Msg[key.toUpperCase()] = msg
       }
       thisBiyam._render()
@@ -231,12 +231,12 @@ class Biyam {
   }
 
   get codeText () {
-    var dom = Blockly.Xml.workspaceToDom(this.workspace)
+    const dom = Blockly.Xml.workspaceToDom(this.workspace)
     return Blockly.Xml.domToText(dom)
   }
 
   set codeText (code) {
-    var dom = Blockly.Xml.textToDom(code)
+    const dom = Blockly.Xml.textToDom(code)
     Blockly.Xml.domToWorkspace(dom, this.workspace)
   }
 }

@@ -11,7 +11,7 @@ function modalPrompt (msg, callback) {
   $modal.find('form').off('submit')
   $modal.find('#biyamPromptText').val('')
   $modal.off('hidden.bs.modal')
-  var ret = [null]
+  const ret = [null]
   $modal.find('form').on('submit', function () {
     $modal.modal('hide')
     ret.push($modal.find('#biyamPromptText').val())

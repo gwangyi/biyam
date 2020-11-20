@@ -8,17 +8,17 @@ function _argBuilder (block, pairSep, argSep, primitiveConverter) {
     if ($(arg).attr('type') === 'Check') {
       return $(arg).attr('name') + pairSep + (block.getFieldValue('ARG-' + idx) === 'TRUE' ? 'True' : 'False')
     } else if ($(arg).find('item').length > 0) {
-      let val = JSON.parse(block.getFieldValue('ARG-' + idx))
+      const val = JSON.parse(block.getFieldValue('ARG-' + idx))
       return $(arg).attr('name') + pairSep + primitiveConverter(val)
     } else {
-      var code = Blockly.Python.valueToCode(block, 'ARG-' + idx, 99)
+      const code = Blockly.Python.valueToCode(block, 'ARG-' + idx, 99)
       if (code) { return $(arg).attr('name') + pairSep + code } else { return '' }
     }
   }).join(argSep)
 }
 
 function biyamProcedurePy (block) {
-  var args = _argBuilder(block, '=', ', ', val => {
+  const args = _argBuilder(block, '=', ', ', val => {
     if (typeof (val) === 'string') return '"' + val + '"'
     else return val
   })
@@ -30,7 +30,7 @@ function biyamProcedurePy (block) {
 }
 
 function biyamProcedureJs (block) {
-  var args = _argBuilder(block, ': ', ', ', JSON.stringify)
+  const args = _argBuilder(block, ': ', ', ', JSON.stringify)
   return '_biyamRpc("' + block.$mutation.attr('cat') + '", "' + block.getFieldValue('NAME') + '", {' + args + '})'
 }
 
