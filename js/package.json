@@ -37,7 +37,7 @@
     "node-blockly": "^1.0.31",
     "style-loader": "^2.0.0",
     "text-loader": "0.0.1",
-    "webpack": "^5.6.0",
+    "webpack": "^5.76.0",
     "webpack-stream": "^6.1.1"
   },
   "dependencies": {},
